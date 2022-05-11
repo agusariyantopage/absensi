@@ -1,5 +1,4 @@
 <?php
-
 $lembaga = $_SESSION['user_lembaga'];
 $id_karyawan = $_SESSION['user_id'];
 $sql0 = "select * from unit_kerja where kode='$lembaga' order by unit_kerja asc";
@@ -45,85 +44,96 @@ $id_unit_kerja = $data0['id_unit_kerja'];
                                         <td>No</td>
                                         <td>Tanggal</td>
                                         <td>Kelas</td>
-                                        <td>Status</td>
+                                        <td>Divalidasi Oleh</td>
                                         <td>Jumlah Jam / SKS</td>
 
                                     </tr>
                                 </thead>
                                 <!-- Isi Tabel -->
                                 <?php
-                                $sql3="select * from periode_absensi where aktif=1";
-                                $query3=mysqli_query($koneksi,$sql3);
-                                $data3=mysqli_fetch_array($query3);
-                                $tanggal_awal=$data3['tanggal_awal'];
-                                $tanggal_akhir=$data3['tanggal_akhir'];
+                                $sql3 = "select * from periode_absensi where aktif=1";
+                                $query3 = mysqli_query($koneksi, $sql3);
+                                $data3 = mysqli_fetch_array($query3);
+                                $tanggal_awal = $data3['tanggal_awal'];
+                                $tanggal_akhir = $data3['tanggal_akhir'];
 
 
                                 $begin = new DateTime($tanggal_awal);
-                                $end = new DateTime($tanggal_akhir  );
+                                $end = new DateTime($tanggal_akhir);
                                 $end = $end->modify('+1 day');
 
                                 $interval = new DateInterval('P1D');
                                 $daterange = new DatePeriod($begin, $interval, $end);
-                                $no=0;
+                                $no = 0;
+                                $grandtotal_jam = 0;
                                 foreach ($daterange as $date) {
                                     $no++;
-                                    $dow=$date->format("w");
-                                    switch($dow){
+                                    $dow = $date->format("w");
+                                    switch ($dow) {
                                         case 0:
-                                            $hari="Minggu";
+                                            $hari = "Minggu";
                                             break;
                                         case 1:
-                                            $hari="Senin";
+                                            $hari = "Senin";
                                             break;
                                         case 2:
-                                            $hari="Selasa";
+                                            $hari = "Selasa";
                                             break;
                                         case 3:
-                                            $hari="Rabo";
+                                            $hari = "Rabo";
                                             break;
                                         case 4:
-                                            $hari="Kamis";
+                                            $hari = "Kamis";
                                             break;
                                         case 5:
-                                            $hari="Jumat";
+                                            $hari = "Jumat";
                                             break;
                                         case 6:
-                                            $hari="Sabtu";
+                                            $hari = "Sabtu";
                                             break;
                                     }
-                                    $tgl=$date->format("Y-m-d");
-                                    $sql1="select sum(jumlah_jam) as total_jam from jadwal where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
-                                    $query1=mysqli_query($koneksi,$sql1);
-                                    $data1=mysqli_fetch_array($query1);
-                                    $total_jam=$data1['total_jam'];
-                                    if(is_null($total_jam)){
-                                        $total_jam=0;
+                                    $tgl = $date->format("Y-m-d");
+                                    $sql1 = "select sum(jumlah_jam) as total_jam from jadwal where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
+                                    $query1 = mysqli_query($koneksi, $sql1);
+                                    $data1 = mysqli_fetch_array($query1);
+                                    $total_jam = $data1['total_jam'];
+                                    if (is_null($total_jam)) {
+                                        $total_jam = 0;
                                     }
+                                    $grandtotal_jam = $grandtotal_jam + $total_jam;
 
                                 ?>
                                     <tr>
                                         <td><?= $no; ?></td>
-                                        <td>                                           
-                                            <button type="button" data-tgl="<?= $date->format("Y-m-d"); ?>" class="btn btn-link info_jadwal_tgl" data-toggle="modal" data-target="#exampleModal9"><?= $date->format("d-m-Y")."(".$hari.")"; ?></button>
+                                        <td>
+                                            <button type="button" data-tgl="<?= $date->format("Y-m-d"); ?>" class="btn btn-link info_jadwal_tgl" data-toggle="modal" data-target="#exampleModal9"><?= $date->format("d-m-Y") . "(" . $hari . ")"; ?></button>
                                         </td>
                                         <td>
                                             <?php
-                                                $sql2="select * from jadwal where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
-                                                $query2=mysqli_query($koneksi,$sql2);
-                                                while($data2=mysqli_fetch_array($query2)){
-                                                    echo $data2['kelas'].' ';
+                                            $sql2 = "select * from jadwal where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
+                                            $query2 = mysqli_query($koneksi, $sql2);
+                                            if (mysqli_num_rows($query2) >= 1) {
+                                                while ($data2 = mysqli_fetch_array($query2)) {
+                                                    echo $data2['kelas'] . ' ';
+                                                    
+                                                    $valid = '<font class="text-success">'.$data2['divalidasi_oleh'] . ' ( ' . $data2['divalidasi_pada'] . ' )';
                                                 }
+                                            } else {
+                                                $valid = "<font class='text-danger'>-- Tidak Ada Data --</font>";
+                                            }
 
                                             ?>
                                         </td>
-                                        <td>Belum Diverifikasi</td>
-                                        <td><?= $total_jam; ?></td>
+                                        <td><?= $valid; ?></td>
+                                        <td align="right"><?= $total_jam; ?></td>
                                     </tr>
                                 <?php
                                 }
                                 ?>
-
+                                <tr>
+                                    <td colspan="4">Total Jam</td>
+                                    <td align="right"><?= $grandtotal_jam; ?></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -138,20 +148,20 @@ $id_unit_kerja = $data0['id_unit_kerja'];
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal Untuk Informasi Penjualan -->
+<!-- Modal Untuk Informasi Absensi -->
 <div class="modal fade" id="exampleModal9" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Informasi Jam Mengajar</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>        
-      </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Informasi Jam Mengajar</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>   
+</div>

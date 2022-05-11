@@ -63,14 +63,14 @@ $id_unit_kerja = $data0['id_unit_kerja'];
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="id_mata_pelajaran">Mata Pelajaran</label>
-                        <select name="id_mata_pelajaran" class="form-control select2bs4" required>
-                            <option value="">-- Pilih Mata Pelajaran --</option>
+                        <label for="id_prodi">Program Studi / Jurusan</label>
+                        <select name="id_prodi" id="id_prodi" class="form-control select2bs4" required>
+                            <option value="">-- Pilih Program Studi / Jurusan --</option>
                             <?php
-                            $sql1 = "select * from mata_pelajaran where dihapus_pada IS NULL and id_unit_kerja=$id_unit_kerja group by mata_pelajaran asc";
+                            $sql1 = "select * from prodi where id_unit_kerja=$id_unit_kerja order by prodi";
                             $query1 = mysqli_query($koneksi, $sql1);
                             while ($data1 = mysqli_fetch_array($query1)) {
-                                echo "<option value='$data1[id_mata_pelajaran]'>$data1[mata_pelajaran]</option>";
+                                echo "<option value='$data1[id_prodi]'>$data1[prodi]</option>";
                             }
                             ?>
                         </select>
@@ -79,9 +79,14 @@ $id_unit_kerja = $data0['id_unit_kerja'];
 
                 </div>
 
+                <label for="id_mata_pelajaran">Mata Pelajaran</label>
+                <select name="id_mata_pelajaran" id="id_mata_pelajaran_cari" class="form-control select2bs4" required>
+                    
+                </select>
+
                 <label for="id_karyawan">Nama Guru / Dosen</label>
                 <select name="id_karyawan" class="form-control" required readonly>
-                    
+
                     <?php
                     $sql1 = "select * from karyawan where id_karyawan=$id_karyawan";
                     $query1 = mysqli_query($koneksi, $sql1);
@@ -146,8 +151,8 @@ $id_unit_kerja = $data0['id_unit_kerja'];
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mb-3">Simpan</button>
-        </div>        
-        
+        </div>
+
         </form>
 
 </div><!-- /.container-fluid -->

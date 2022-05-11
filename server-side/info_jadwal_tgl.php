@@ -27,7 +27,7 @@ echo '
 			<th scope="col">Mata Pelajaran/Kuliah</th>
 			<th scope="col">Kelas</th>
 			<th scope="col">Jumlah Jam/SKS</th>
-			<th scope="col">Status</th>
+			<th scope="col">Divalidasi Oleh</th>
 			<th scope="col">Hapus</th>
 		</tr>
 	</thead>
@@ -40,8 +40,9 @@ echo '
 		$grandtotal = 0;
 		while ($kolom2 = mysqli_fetch_array($query2)) {
 			$no++;
-			$grandtotal = $grandtotal+$kolom2['jumlah_jam'];
-			$msg="Apakah Yakin Data Ini Dihapus??";
+			$grandtotal = $grandtotal + $kolom2['jumlah_jam'];
+			$msg = "Apakah Yakin Data Ini Dihapus??";
+			
 			echo "
 		<tr>
 			<td>$no</td>
@@ -51,10 +52,17 @@ echo '
 			<td align=right>$kolom2[jumlah_jam]</td>
 			<td align=center>$kolom2[divalidasi_oleh]</td>
 			<td align=center>
-			<a href=\"aksi/jadwal.php?aksi=hapus-individual&id=$kolom2[id_jadwal]\" OnClick=\"return confirm('Apakah Yakin Data Ini Dihapus??');\"><i class='fas fa-trash'></i></a>			
+		";
+			if ($kolom2['divalidasi_oleh'] == '-- Belum Validasi --') {
+				echo "<a href=\"aksi/jadwal.php?aksi=hapus-individual&id=$kolom2[id_jadwal]\" OnClick=\"return confirm('Apakah Yakin Data Ini Dihapus??');\"><i class='fas fa-trash'></i></a>			
 			</td>
 		</tr>
 		";
+			} else {
+			"</td>
+		</tr>
+		";
+			}
 		}
 		?>
 

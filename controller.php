@@ -43,28 +43,21 @@
         $title  ="Data Jadwal";
         $konten="konten/jadwal.php";
     } 
+    else if($_GET['p']=='periode-absensi'){
+        $title  ="Data Periode Absensi";
+        $konten="konten/periode_absensi.php";
+    } 
     else if($_GET['p']=='chain'){
         $title  ="Data Jadwal";
         $konten="konten/chain.php";
     } 
    
-    // Menu Transaksi
-    else if($_GET['p']=='jadwal'){
-        $title  ="Data Perencanaan";
-        $konten="konten/jadwal.php";
+    // Menu Validasi
+    else if($_GET['p']=='validasi-absensi'){
+        $title  ="Validasi Absensi";
+        $konten="konten/validasi_absensi.php";
     }
-    else if($_GET['p']=='jadwal-detail'){
-        $title  ="Data Detail Perencanaan";
-        $konten="konten/jadwal-detail.php";
-    }
-    else if($_GET['p']=='realisasi'){
-        $title  ="Data Realisasi Penjadwalan Collecting";
-        $konten="konten/realisasi.php";
-    }
-    else if($_GET['p']=='jadwal-kolektor'){
-        $title  ="Data Jadwal Collecting";
-        $konten="konten/jadwal-kolektor.php";
-    }
+   
 
     // Menu Laporan
     else if($_GET['p']=='laporan'){

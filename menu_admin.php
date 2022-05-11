@@ -53,6 +53,12 @@
                   <p>Jadwal</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="index.php?p=periode-absensi" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Periode Absensi</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -66,9 +72,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?p=jadwal-summary" class="nav-link">
+                <a href="index.php?p=validasi-absensi" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Kelas Reguler</p>
+                  <p>Validasi</p>
                   
                 </a>
               </li>

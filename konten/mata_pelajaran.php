@@ -4,28 +4,27 @@ if (!empty($_GET['id_prodi'])) {
   $id_unit_kerja = $_GET['id_unit_kerja'];
   $id_prodi = $_GET['id_prodi'];
 
-  $sql_get1="select * from tahun_ajar where id_tahun_ajar=$id_tahun_ajar";
-  $query_get1=mysqli_query($koneksi,$sql_get1);
-  $get1=mysqli_fetch_array($query_get1);
-  $isi_tahun_ajar=$get1['tahun_ajar'];
+  $sql_get1 = "select * from tahun_ajar where id_tahun_ajar=$id_tahun_ajar";
+  $query_get1 = mysqli_query($koneksi, $sql_get1);
+  $get1 = mysqli_fetch_array($query_get1);
+  $isi_tahun_ajar = $get1['tahun_ajar'];
 
-  $sql_get2="select * from unit_kerja where id_unit_kerja=$id_unit_kerja";
-  $query_get2=mysqli_query($koneksi,$sql_get2);
-  $get2=mysqli_fetch_array($query_get2);
-  $isi_unit_kerja=$get2['unit_kerja'];
+  $sql_get2 = "select * from unit_kerja where id_unit_kerja=$id_unit_kerja";
+  $query_get2 = mysqli_query($koneksi, $sql_get2);
+  $get2 = mysqli_fetch_array($query_get2);
+  $isi_unit_kerja = $get2['unit_kerja'];
 
-  $sql_get3="select * from prodi where id_prodi=$id_prodi";
-  $query_get3=mysqli_query($koneksi,$sql_get3);
-  $get3=mysqli_fetch_array($query_get3);
-  $isi_prodi=$get3['prodi'];
-
+  $sql_get3 = "select * from prodi where id_prodi=$id_prodi";
+  $query_get3 = mysqli_query($koneksi, $sql_get3);
+  $get3 = mysqli_fetch_array($query_get3);
+  $isi_prodi = $get3['prodi'];
 } else {
-  $id_tahun_ajar = 0;
-  $isi_tahun_ajar="-- Pilih Tahun Ajar --";
-  $id_unit_kerja = 0;
-  $isi_unit_kerja="-- Pilih Unit Pendidikan --";
-  $id_prodi = 0;
-  $isi_prodi="-- Pilih Prodi / Jurusan --";
+  $id_tahun_ajar = '';
+  $isi_tahun_ajar = "-- Pilih Tahun Ajar --";
+  $id_unit_kerja = '';
+  $isi_unit_kerja = "-- Pilih Unit Pendidikan --";
+  $id_prodi = '';
+  $isi_prodi = "-- Pilih Prodi / Jurusan --";
 }
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -87,15 +86,8 @@ if (!empty($_GET['id_prodi'])) {
 
               <div class="col-3">
                 <label for="id_prodi">Prodi / Jurusan</label>
-                <select name="id_prodi" id="id_prodi_cari" class="form-control" required>
-                <option value="<?= $id_prodi; ?>"><?= $isi_prodi; ?></option>
-                  <?php
-                  $sql1 = "select * from prodi where dihapus_pada IS NULL order by prodi asc";
-                  $query1 = mysqli_query($koneksi, $sql1);
-                  while ($data1 = mysqli_fetch_array($query1)) {
-                    echo "<option value='$data1[id_prodi]'>$data1[prodi]</option>";
-                  }
-                  ?>
+                <select name="id_prodi" id="id_prodi_cari" class="form-control select2bs4" required>
+                  <option value="<?= $id_prodi; ?>"><?= $isi_prodi; ?></option>
                 </select>
               </div>
 
@@ -110,9 +102,14 @@ if (!empty($_GET['id_prodi'])) {
             <h3>Data Mata Pelajaran / Kuliah</h3>
           </div>
           <div class="card-body">
-            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
-              <i class="fas fa-plus"></i> Tambah</button>
-
+            <?php
+            if (!empty($_GET['id_prodi'])) {
+            ?>
+              <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
+                <i class="fas fa-plus"></i> Tambah</button>
+            <?php
+            }
+            ?>
             <table id="example1" class="table table-bordered table-striped table-sm">
               <!-- Kepala Tabel -->
               <thead>
@@ -128,7 +125,7 @@ if (!empty($_GET['id_prodi'])) {
               <!-- Isi Tabel -->
               <?php
 
-              $sql = "select mata_pelajaran.*,unit_kerja,tahun_ajar from mata_pelajaran,unit_kerja,tahun_ajar where mata_pelajaran.id_unit_kerja=unit_kerja.id_unit_kerja and mata_pelajaran.id_tahun_ajar=tahun_ajar.id_tahun_ajar and mata_pelajaran.dihapus_pada IS NULL and mata_pelajaran.id_tahun_ajar=$id_tahun_ajar and mata_pelajaran.id_prodi=$id_prodi";
+              $sql = "select mata_pelajaran.*,unit_kerja,tahun_ajar from mata_pelajaran,unit_kerja,tahun_ajar where mata_pelajaran.id_unit_kerja=unit_kerja.id_unit_kerja and mata_pelajaran.id_tahun_ajar=tahun_ajar.id_tahun_ajar and mata_pelajaran.dihapus_pada IS NULL and mata_pelajaran.id_tahun_ajar='$id_tahun_ajar' and mata_pelajaran.id_prodi='$id_prodi'";
               //echo $sql;
               $query = mysqli_query($koneksi, $sql);
               while ($kolom = mysqli_fetch_array($query)) {
@@ -158,7 +155,7 @@ if (!empty($_GET['id_prodi'])) {
                           <input type="hidden" name="id_mata_pelajaran" value="<?= $kolom['id_mata_pelajaran']; ?>">
 
                           <label for="id_tahun_ajar">Tahun Ajar</label>
-                          <select name="id_tahun_ajar" id="id_tahun_ajar" class="form-control" required>
+                          <select name="id_tahun_ajar" id="id_tahun_ajar" class="form-control" required readonly>
                             <option value="<?= $kolom['id_tahun_ajar']; ?>"><?= $kolom['tahun_ajar']; ?></option>
                             <?php
                             $sql1 = "select * from tahun_ajar where dihapus_pada IS NULL order by tahun_ajar desc";
@@ -170,7 +167,7 @@ if (!empty($_GET['id_prodi'])) {
                           </select>
 
                           <label for="id_unit_kerja">Unit Pendidikan</label>
-                          <select name="id_unit_kerja" id="id_unit_kerja" class="form-control" required>
+                          <select name="id_unit_kerja" id="id_unit_kerja" class="form-control" required readonly>
                             <option value="<?= $kolom['id_unit_kerja']; ?>"><?= $kolom['unit_kerja']; ?></option>
                             <?php
                             $sql1 = "select * from unit_kerja where dihapus_pada IS NULL order by unit_kerja desc";
@@ -181,11 +178,22 @@ if (!empty($_GET['id_prodi'])) {
                             ?>
                           </select>
 
+                          <label for="id_prodi">Program Studi / Jurusan</label>
+                          <select name="id_prodi" id="id_prodi" class="form-control" required readonly>
+                            <option value="<?= $id_prodi; ?>"><?= $isi_prodi; ?></option>
+                          </select>
+
                           <label for="kode">Kode Mata Pelajaran / Kuliah</label>
                           <input type="text" required class="form-control" value="<?= $kolom['kode']; ?>" name="kode">
 
                           <label for="mata_pelajaran">Nama Mata Pelajaran / Kuliah</label>
                           <input type="text" required class="form-control" value="<?= $kolom['mata_pelajaran']; ?>" name="mata_pelajaran">
+
+                          <label for="semester">Semester</label>
+                          <input type="text" required class="form-control" value="<?= $kolom['semester']; ?>" name="semester">
+
+                          <label for="jumlah_jam">Jumlah Jam / SKS</label>
+                          <input type="text" required class="form-control" value="<?= $kolom['jumlah_jam']; ?>" name="jumlah_jam">
 
                       </div>
                       <div class="modal-footer">
@@ -227,27 +235,18 @@ if (!empty($_GET['id_prodi'])) {
           <input type="hidden" name="aksi" value="tambah">
 
           <label for="id_tahun_ajar">Tahun Ajar</label>
-          <select name="id_tahun_ajar" id="id_tahun_ajar" class="form-control" required>
-            <option value="">-- Pilih Tahun Ajar --</option>
-            <?php
-            $sql1 = "select * from tahun_ajar where dihapus_pada IS NULL order by tahun_ajar desc";
-            $query1 = mysqli_query($koneksi, $sql1);
-            while ($data1 = mysqli_fetch_array($query1)) {
-              echo "<option value='$data1[id_tahun_ajar]'>$data1[tahun_ajar]</option>";
-            }
-            ?>
+          <select name="id_tahun_ajar" id="id_tahun_ajar" class="form-control" required readonly>
+            <option value="<?= $id_tahun_ajar; ?>"><?= $isi_tahun_ajar; ?></option>
           </select>
 
           <label for="id_unit_kerja">Unit Pendidikan</label>
-          <select name="id_unit_kerja" id="id_unit_kerja" class="form-control" required>
-            <option value="">-- Pilih Unit Pendidikan --</option>
-            <?php
-            $sql1 = "select * from unit_kerja where dihapus_pada IS NULL order by unit_kerja desc";
-            $query1 = mysqli_query($koneksi, $sql1);
-            while ($data1 = mysqli_fetch_array($query1)) {
-              echo "<option value='$data1[id_unit_kerja]'>$data1[unit_kerja]</option>";
-            }
-            ?>
+          <select name="id_unit_kerja" id="id_unit_kerja" class="form-control" required readonly>
+            <option value="<?= $id_unit_kerja; ?>"><?= $isi_unit_kerja; ?></option>
+          </select>
+
+          <label for="id_prodi">Program Studi / Jurusan</label>
+          <select name="id_prodi" id="id_prodi" class="form-control" required readonly>
+            <option value="<?= $id_prodi; ?>"><?= $isi_prodi; ?></option>
           </select>
 
           <label for="kode">Kode Mata Pelajaran / Kuliah</label>
@@ -255,6 +254,12 @@ if (!empty($_GET['id_prodi'])) {
 
           <label for="mata_pelajaran">Nama Mata Pelajaran / Kuliah</label>
           <input type="text" required class="form-control" name="mata_pelajaran">
+
+          <label for="semester">Semester</label>
+          <input type="text" required class="form-control" name="semester">
+
+          <label for="jumlah_jam">Jumlah Jam / SKS</label>
+          <input type="text" required class="form-control" name="jumlah_jam">
 
       </div>
       <div class="modal-footer">

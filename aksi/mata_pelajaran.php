@@ -7,10 +7,13 @@
             
             $id_unit_kerja=$_POST['id_unit_kerja'];
             $id_tahun_ajar=$_POST['id_tahun_ajar'];
+            $id_prodi=$_POST['id_prodi'];
             $kode=$_POST['kode'];
             $mata_pelajaran=$_POST['mata_pelajaran'];
+            $semester=$_POST['semester'];
+            $jumlah_jam=$_POST['jumlah_jam'];
 
-            $sql="insert into mata_pelajaran (id_tahun_ajar, id_unit_kerja, kode, mata_pelajaran, dibuat_pada, diubah_pada, dihapus_pada) values($id_tahun_ajar,$id_unit_kerja,'$kode', '$mata_pelajaran',DEFAULT,DEFAULT,DEFAULT)";
+            $sql="insert into mata_pelajaran (id_tahun_ajar, id_unit_kerja, id_prodi, kode, mata_pelajaran, semester, jumlah_jam, dibuat_pada, diubah_pada, dihapus_pada) values($id_tahun_ajar,$id_unit_kerja,$id_prodi,'$kode', '$mata_pelajaran',$semester,$jumlah_jam,DEFAULT,DEFAULT,DEFAULT)";
             mysqli_query($koneksi,$sql);
 
             // Trigger Popup Sweet Alert
@@ -19,16 +22,20 @@
                 $_SESSION['status_proses'] ='TAMBAH';                    
             }
             //echo $sql;
-            header('location:../index.php?p=mata_pelajaran');
+            $link='location:../index.php?p=mata_pelajaran&id_tahun_ajar='.$id_tahun_ajar.'&id_unit_kerja='.$id_unit_kerja.'&id_prodi='.$id_prodi;
+            header($link);
         }
         else if($_POST['aksi']=='ubah'){
             $id_mata_pelajaran=$_POST['id_mata_pelajaran'];
             $id_unit_kerja=$_POST['id_unit_kerja'];
             $id_tahun_ajar=$_POST['id_tahun_ajar'];
+            $id_prodi=$_POST['id_prodi'];
             $kode=$_POST['kode'];
             $mata_pelajaran=$_POST['mata_pelajaran'];
+            $semester=$_POST['semester'];
+            $jumlah_jam=$_POST['jumlah_jam'];
 
-            $sql="update mata_pelajaran set id_tahun_ajar=$id_tahun_ajar,id_unit_kerja=$id_unit_kerja,kode='$kode',mata_pelajaran='$mata_pelajaran', diubah_pada=DEFAULT where id_mata_pelajaran=$id_mata_pelajaran";
+            $sql="update mata_pelajaran set id_tahun_ajar=$id_tahun_ajar,id_unit_kerja=$id_unit_kerja,kode='$kode',mata_pelajaran='$mata_pelajaran',semester=$semester, jumlah_jam=$jumlah_jam, diubah_pada=DEFAULT where id_mata_pelajaran=$id_mata_pelajaran";
             mysqli_query($koneksi,$sql);
             
             // Trigger Popup Sweet Alert
@@ -37,7 +44,8 @@
                 $_SESSION['status_proses'] ='UBAH';                    
             }
 
-            header('location:../index.php?p=mata_pelajaran');
+            $link='location:../index.php?p=mata_pelajaran&id_tahun_ajar='.$id_tahun_ajar.'&id_unit_kerja='.$id_unit_kerja.'&id_prodi='.$id_prodi;
+            header($link);
         }
         
     }
