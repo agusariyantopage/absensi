@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -60,9 +60,9 @@
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" id="remember">
-                <label for="remember">
-                  Remember Me
+                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                <label for="myCheck">
+                  Show Password
                 </label>
               </div>
             </div>
@@ -92,6 +92,16 @@
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.min.js"></script>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
 </body>
 
 </html>

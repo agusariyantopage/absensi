@@ -48,6 +48,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="index.php?p=siswa" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Siswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="index.php?p=jadwal" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Jadwal</p>
@@ -82,7 +88,7 @@
           </li>     
           
           <li class="nav-item">
-            <a href="index.php?p=laporan" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-trash"></i>
               <p>
                 Keranjang Sampah
@@ -91,7 +97,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="index.php?p=laporan" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-print"></i>
               <p>
                 Laporan

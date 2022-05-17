@@ -31,6 +31,10 @@
         $title  ="Data Karyawan";
         $konten="konten/karyawan.php";
     } 
+    else if($_GET['p']=='siswa'){
+        $title  ="Data Mahasiswa";
+        $konten="konten/siswa.php";
+    } 
     else if($_GET['p']=='jadwal-summary'){
         $title  ="Data Rekapitulasi Mengajar";
         $konten="konten/jadwal_summary.php";

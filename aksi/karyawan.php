@@ -16,18 +16,21 @@ if (!empty($_POST)) {
         mysqli_query($koneksi, $sql);
         // echo $sql;
         header('location:../index.php?p=karyawan');
-    } else if ($_POST['aksi'] == 'ubah') {
+    } else if ($_POST['aksi'] == 'ubah-akun') {
         $id_karyawan = $_POST['id_karyawan'];
-        $id_kelas_karyawan = $_POST['id_kelas_karyawan'];
-        $nama = $_POST['nama'];
-        $alamat = $_POST['alamat'];
         $email = $_POST['email'];
-        $handphone = $_POST['handphone'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $sandi = $_POST['sandi'];
+        
 
-        $sql = "update karyawan set id_kelas_karyawan=$id_kelas_karyawan,nama='$nama',alamat='$alamat',email='$email',handphone='$handphone',username='$username',password='$password',diubah_pada=DEFAULT where id_karyawan=$id_karyawan";
+        $sql = "update karyawan set email='$email',password='$sandi' where id_karyawan=$id_karyawan";
         mysqli_query($koneksi, $sql);
+
+        // Trigger Popup Sweet Alert
+        $sukses=mysqli_affected_rows($koneksi);
+        if($sukses>=1){
+            $_SESSION['status_proses'] ='UBAH';                    
+        }
+        //echo $sql;
         header('location:../index.php?p=karyawan');
     } else if ($_POST['aksi'] == 'login') {
         $akses = $_POST['akses'];

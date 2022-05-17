@@ -399,7 +399,7 @@ $status_proses = $_SESSION['status_proses'];
       $(document).on('click', '.info_jadwal_tgl', function() {
 
         var tgl = $(this).data('tgl');
-        
+
 
         // AJAX request
         $.ajax({
@@ -407,6 +407,26 @@ $status_proses = $_SESSION['status_proses'];
           type: 'post',
           data: {
             tgl: tgl
+          },
+          success: function(response) {
+            // Add response in Modal body
+            $('.modal-body').html(response);
+          }
+        });
+      });
+
+      // Modal Get Info User Karyawan
+      $(document).on('click', '.info_karyawan_user', function() {
+
+        var id = $(this).data('id');
+
+
+        // AJAX request
+        $.ajax({
+          url: 'server-side/info_karyawan_user.php',
+          type: 'post',
+          data: {
+            id: id
           },
           success: function(response) {
             // Add response in Modal body
@@ -423,7 +443,7 @@ $status_proses = $_SESSION['status_proses'];
         var akhir = $(this).data('akhir');
         var periode = $(this).data('periode');
         var unit = $(this).data('unit');
-        
+
 
         // AJAX request
         $.ajax({
@@ -433,8 +453,8 @@ $status_proses = $_SESSION['status_proses'];
             id: id,
             awal: awal,
             akhir: akhir,
-            periode:periode,
-            unit:unit
+            periode: periode,
+            unit: unit
           },
           success: function(response) {
             // Add response in Modal body
@@ -442,7 +462,19 @@ $status_proses = $_SESSION['status_proses'];
           }
         });
       });
+     
+      $('.modal').on('click', '#myCheck', function() {
+        var x = document.getElementById("sandi");
+        alert(x.value);
+        if (x.type === "password") {
+          x.type = "text";
 
+        } else {
+          x.type = "password";
+        }
+       
+      });
+     
 
     });
   </script>

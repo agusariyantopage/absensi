@@ -39,6 +39,7 @@
                     <td>Jabatan</td>
                     <td>Golongan</td>
                     <td>Lembaga</td>
+                    <td>Aksi</td>
                   </tr>
                 </thead>
                 <!-- Isi Tabel -->
@@ -52,6 +53,9 @@
                     <td><?= $kolom['jabatan']; ?></td>
                     <td><?= $kolom['golongan']; ?></td>
                     <td><?= $kolom['lembaga']; ?></td>
+                    <td>
+                    <button type="button" data-id="<?= $kolom['id_karyawan']; ?>" class="btn btn-link info_karyawan_user" data-toggle="modal" data-target="#modalKaryawanUser"><i class="fas fa-user"></i></button>
+                    </td>
                   </tr>
 
                 <?php
@@ -100,4 +104,23 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal Untuk Informasi Absensi -->
+<div class="modal fade" id="modalKaryawanUser" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Informasi Username & Password</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                
+            </div>
+        </div>
+    </div>
 </div>
