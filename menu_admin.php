@@ -44,13 +44,19 @@
               <li class="nav-item">
                 <a href="index.php?p=karyawan" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Karyawan</p>
+                  <p>Guru & Dosen</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="index.php?p=siswa" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Siswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="index.php?p=kelas" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kelas</p>
                 </a>
               </li>
               <li class="nav-item">

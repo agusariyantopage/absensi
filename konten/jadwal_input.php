@@ -32,7 +32,7 @@ $id_unit_kerja = $data0['id_unit_kerja'];
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <form action="aksi/jadwal.php" method="post">
+            <form action="aksi/absensi.php" method="post">
                 <input type="hidden" name="aksi" value="tambah-individual">
                 <div class="form-row">
                     <div class="form-group col-md-4">

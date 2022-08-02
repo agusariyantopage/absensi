@@ -109,7 +109,7 @@ if (!empty($_GET['id_unit_kerja'])) {
                             </thead>
                             <!-- Isi Tabel -->
                             <?php
-                            $sql = "select karyawan.*,id_jadwal from karyawan,jadwal where mengajar=1 and lembaga='$lembaga' and (tanggal>='$tanggal_awal' and tanggal<='$tanggal_akhir') and jadwal.id_karyawan=karyawan.id_karyawan group by nama";
+                            $sql = "select karyawan.*,id_absensi from karyawan,absensi where mengajar=1 and lembaga='$lembaga' and (tanggal>='$tanggal_awal' and tanggal<='$tanggal_akhir') and absensi.id_karyawan=karyawan.id_karyawan group by nama";
                             $query = mysqli_query($koneksi, $sql);
                             while ($kolom = mysqli_fetch_array($query)) {
                             ?>

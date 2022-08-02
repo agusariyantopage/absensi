@@ -93,7 +93,7 @@ $id_unit_kerja = $data0['id_unit_kerja'];
                                             break;
                                     }
                                     $tgl = $date->format("Y-m-d");
-                                    $sql1 = "select sum(jumlah_jam) as total_jam from jadwal where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
+                                    $sql1 = "select sum(jumlah_jam) as total_jam from absensi where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
                                     $query1 = mysqli_query($koneksi, $sql1);
                                     $data1 = mysqli_fetch_array($query1);
                                     $total_jam = $data1['total_jam'];
@@ -110,7 +110,7 @@ $id_unit_kerja = $data0['id_unit_kerja'];
                                         </td>
                                         <td>
                                             <?php
-                                            $sql2 = "select * from jadwal where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
+                                            $sql2 = "select * from absensi where tanggal='$tgl' and id_karyawan=$id_karyawan and dihapus_pada IS NULL";
                                             $query2 = mysqli_query($koneksi, $sql2);
                                             if (mysqli_num_rows($query2) >= 1) {
                                                 while ($data2 = mysqli_fetch_array($query2)) {

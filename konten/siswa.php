@@ -24,7 +24,7 @@ if (!empty($_GET['id_prodi'])) {
   $id_unit_kerja = '';
   $isi_unit_kerja = "-- Pilih Unit Pendidikan --";
   $id_prodi = '';
-  $isi_prodi = "-- Pilih Prodi / Jurusan --";
+  $isi_prodi = "-- Pilih Program Studi/Jurusan --";
 }
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -138,10 +138,58 @@ if (!empty($_GET['id_prodi'])) {
                   <td><?= $kolom['diubah_pada']; ?></td>
                   <td>
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#editModal<?= $kolom['id_siswa']; ?>"><i class="fas fa-edit"></i></button>
-                    <button type="button" class="btn btn-link"><a onclick="return confirm('Apakah Yakin Data Ini Dihapus??')" href="aksi/mata_pelajaran.php?aksi=hapus&id=<?= $kolom['id_siswa']; ?>"><i class="fas fa-trash"></i></a></button>
+                    <button type="button" class="btn btn-link"><a onclick="return confirm('Apakah Yakin Data Ini Dihapus??')" href="aksi/siswa.php?aksi=hapus&id=<?= $kolom['id_siswa']; ?>"><i class="fas fa-trash"></i></a></button>
                   </td>
                 </tr>
-                
+                <!-- Modal Edit -->
+                <div class="modal fade" id="editModal<?= $kolom['id_siswa']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Ubah Siswa / Mahasiswa</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="aksi/siswa.php" method='post'>
+                          <input type="hidden" name="aksi" value="ubah">
+                          <input type="hidden" name="id_siswa" value="<?= $kolom['id_siswa']; ?>">
+
+                          <label for="id_tahun_ajar">Tahun Ajar</label>
+                          <select name="id_tahun_ajar" id="id_tahun_ajar" class="form-control" required readonly>
+                            <option value="<?= $id_tahun_ajar; ?>"><?= $isi_tahun_ajar; ?></option>
+                          </select>
+
+                          <label for="id_unit_kerja">Unit Pendidikan</label>
+                          <select name="id_unit_kerja" id="id_unit_kerja" class="form-control" required readonly>
+                            <option value="<?= $id_unit_kerja; ?>"><?= $isi_unit_kerja; ?></option>
+                          </select>
+
+                          <label for="id_prodi">Program Studi / Jurusan</label>
+                          <select name="id_prodi" id="id_prodi" class="form-control" required readonly>
+                            <option value="<?= $id_prodi; ?>"><?= $isi_prodi; ?></option>
+                          </select>
+
+                          <label for="nis">NIS/NIM</label>
+                          <input type="text" required class="form-control" name="nis" value="<?= $kolom['nis']; ?>">
+
+                          <label for="nama">Nama Lengkap</label>
+                          <input type="text" required class="form-control" name="nama" value="<?= $kolom['nama']; ?>">
+
+                          <label for="email">Email</label>
+                          <input type="text" required class="form-control" name="email" value="<?= $kolom['email']; ?>">
+                          
+                          <label for="password">Password Akun</label>
+                          <input type="text" required class="form-control" name="password" value="<?= $kolom['password']; ?>">
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Ubah</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               <?php
               }
               ?>
@@ -165,11 +213,11 @@ if (!empty($_GET['id_prodi'])) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Mata Pelajaran / Kuliah Baru</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Siswa / Mahasiswa Baru</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="aksi/mata_pelajaran.php" method="post">
+        <form action="aksi/siswa.php" method="post">
           <input type="hidden" name="aksi" value="tambah">
 
           <label for="id_tahun_ajar">Tahun Ajar</label>
@@ -187,17 +235,14 @@ if (!empty($_GET['id_prodi'])) {
             <option value="<?= $id_prodi; ?>"><?= $isi_prodi; ?></option>
           </select>
 
-          <label for="kode">Kode Mata Pelajaran / Kuliah</label>
-          <input type="text" required class="form-control" name="kode">
+          <label for="nis">NIS/NIM</label>
+          <input type="text" required class="form-control" name="nis">
 
-          <label for="mata_pelajaran">Nama Mata Pelajaran / Kuliah</label>
-          <input type="text" required class="form-control" name="mata_pelajaran">
+          <label for="nama">Nama Lengkap</label>
+          <input type="text" required class="form-control" name="nama">
 
-          <label for="semester">Semester</label>
-          <input type="text" required class="form-control" name="semester">
-
-          <label for="jumlah_jam">Jumlah Jam / SKS</label>
-          <input type="text" required class="form-control" name="jumlah_jam">
+          <label for="email">Email</label>
+          <input type="text" required class="form-control" name="email">
 
       </div>
       <div class="modal-footer">

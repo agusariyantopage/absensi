@@ -9,22 +9,16 @@ if (!empty($_POST)) {
         $id_tahun_ajar = $_POST['id_tahun_ajar'];
         $id_mata_pelajaran = $_POST['id_mata_pelajaran'];
         $kelas = $_POST['kelas'];
+        $hari = $_POST['hari'];
         $tanggal = $_POST['tanggal'];
+        $tanggal_akhir = $_POST['tanggal_akhir'];
         $jam_awal = $_POST['jam_awal'];
         $jam_akhir = $_POST['jam_akhir'];
         $jumlah_jam = $_POST['jumlah_jam'];
-        $pertemuan_ke = $_POST['pertemuan_ke'];
-        $target_materi = $_POST['target_materi'];
-        $realisasi_materi = $_POST['realisasi_materi'];
-        $catatan = $_POST['catatan'];
-        $jumlah_siswa = $_POST['jumlah_siswa'];
-        $jumlah_hadir = $_POST['jumlah_hadir'];
-        $jumlah_sakit = $_POST['jumlah_sakit'];
-        $jumlah_izin = $_POST['jumlah_izin'];
-        $jumlah_alpha = $_POST['jumlah_alpha'];
+        
 
 
-        $sql = "insert into jadwal (id_karyawan, id_tahun_ajar, id_mata_pelajaran, kelas, tanggal, jam_awal, jam_akhir, jumlah_jam, pertemuan_ke, target_materi, realisasi_materi, catatan, jumlah_siswa, jumlah_hadir, jumlah_sakit, jumlah_izin, jumlah_alpha, dibuat_pada, diubah_pada, divalidasi_pada, divalidasi_oleh, dihapus_pada) values($id_karyawan,$id_tahun_ajar,$id_mata_pelajaran,'$kelas','$tanggal','$jam_awal','$jam_akhir',$jumlah_jam,'$pertemuan_ke','$target_materi','$realisasi_materi','$catatan',$jumlah_siswa,$jumlah_hadir,$jumlah_sakit,$jumlah_izin,$jumlah_alpha,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+        $sql = "insert into jadwal (id_karyawan, id_tahun_ajar, id_mata_pelajaran, kelas, hari, tanggal,tanggal_akhir, jam_awal, jam_akhir, jumlah_jam, dibuat_pada, diubah_pada, dihapus_pada) values($id_karyawan,$id_tahun_ajar,$id_mata_pelajaran,'$kelas','$hari','$tanggal','$tanggal_akhir','$jam_awal','$jam_akhir',$jumlah_jam,DEFAULT,DEFAULT,DEFAULT)";
         mysqli_query($koneksi, $sql);
 
         // Trigger Popup Sweet Alert
@@ -33,59 +27,26 @@ if (!empty($_POST)) {
             $_SESSION['status_proses'] = 'TAMBAH';
         }
         //echo $sql;
-        header('location:../index.php?p=jadwal');
-    } else if ($_POST['aksi'] == 'tambah-individual') {
-
-        $id_karyawan = $_POST['id_karyawan'];
-        $id_tahun_ajar = $_POST['id_tahun_ajar'];
-        $id_mata_pelajaran = $_POST['id_mata_pelajaran'];
-        $kelas = $_POST['kelas'];
-        $tanggal = $_POST['tanggal'];
-        $jam_awal = $_POST['jam_awal'];
-        $jam_akhir = $_POST['jam_akhir'];
-        $jumlah_jam = $_POST['jumlah_jam'];
-        $pertemuan_ke = $_POST['pertemuan_ke'];
-        $target_materi = $_POST['target_materi'];
-        $realisasi_materi = $_POST['realisasi_materi'];
-        $catatan = $_POST['catatan'];
-        $jumlah_siswa = $_POST['jumlah_siswa'];
-        $jumlah_hadir = $_POST['jumlah_hadir'];
-        $jumlah_sakit = $_POST['jumlah_sakit'];
-        $jumlah_izin = $_POST['jumlah_izin'];
-        $jumlah_alpha = $_POST['jumlah_alpha'];
-
-
-        $sql = "insert into jadwal (id_karyawan, id_tahun_ajar, id_mata_pelajaran, kelas, tanggal, jam_awal, jam_akhir, jumlah_jam, pertemuan_ke, target_materi, realisasi_materi, catatan, jumlah_siswa, jumlah_hadir, jumlah_sakit, jumlah_izin, jumlah_alpha, dibuat_pada, diubah_pada, divalidasi_pada, divalidasi_oleh, dihapus_pada) values($id_karyawan,$id_tahun_ajar,$id_mata_pelajaran,'$kelas','$tanggal','$jam_awal','$jam_akhir',$jumlah_jam,'$pertemuan_ke','$target_materi','$realisasi_materi','$catatan',$jumlah_siswa,$jumlah_hadir,$jumlah_sakit,$jumlah_izin,$jumlah_alpha,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
-        mysqli_query($koneksi, $sql);
-
-        // Trigger Popup Sweet Alert
-        $sukses = mysqli_affected_rows($koneksi);
-        if ($sukses >= 1) {
-            $_SESSION['status_proses'] = 'TAMBAH';
-        }
-        //echo $sql;
-        header('location:../index.php?p=jadwal-summary');
+        //header('location:../index.php?p=jadwal');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    
     } else if ($_POST['aksi'] == 'ubah') {
         $id_jadwal = $_POST['id_jadwal'];
         $id_karyawan = $_POST['id_karyawan'];
         $id_tahun_ajar = $_POST['id_tahun_ajar'];
         $id_mata_pelajaran = $_POST['id_mata_pelajaran'];
         $kelas = $_POST['kelas'];
+        $hari = $_POST['hari'];
         $tanggal = $_POST['tanggal'];
+        $tanggal_akhir = $_POST['tanggal_akhir'];
         $jam_awal = $_POST['jam_awal'];
         $jam_akhir = $_POST['jam_akhir'];
-        $pertemuan_ke = $_POST['pertemuan_ke'];
-        $target_materi = $_POST['target_materi'];
-        $realisasi_materi = $_POST['realisasi_materi'];
-        $catatan = $_POST['catatan'];
-        $jumlah_siswa = $_POST['jumlah_siswa'];
-        $jumlah_hadir = $_POST['jumlah_hadir'];
-        $jumlah_sakit = $_POST['jumlah_sakit'];
-        $jumlah_izin = $_POST['jumlah_izin'];
-        $jumlah_alpha = $_POST['jumlah_alpha'];
+        $jumlah_jam = $_POST['jumlah_jam'];
 
-        $sql = "update jadwal set id_karyawan=$id_karyawan, id_tahun_ajar=$id_tahun_ajar, id_mata_pelajaran=$id_mata_pelajaran, kelas='$kelas', tanggal='$tanggal', jam_awal='$jam_awal', jam_akhir='$jam_akhir', pertemuan_ke=$pertemuan_ke, target_materi='$target_materi', realisasi_materi='$realisasi_materi', catatan='$catatan', jumlah_siswa=$jumlah_siswa, jumlah_hadir=$jumlah_hadir, jumlah_sakit=$jumlah_sakit, jumlah_izin=$jumlah_izin, jumlah_alpha=$jumlah_alpha, diubah_pada=DEFAULT where id_jadwal=$id_jadwal";
+        $sql = "update jadwal set id_karyawan=$id_karyawan, id_tahun_ajar=$id_tahun_ajar, id_mata_pelajaran=$id_mata_pelajaran, kelas='$kelas',hari='$hari', tanggal='$tanggal',tanggal_akhir='$tanggal_akhir', jam_awal='$jam_awal', jam_akhir='$jam_akhir',jumlah_jam=$jumlah_jam, diubah_pada=DEFAULT where id_jadwal=$id_jadwal";
         mysqli_query($koneksi, $sql);
+        
 
         // Trigger Popup Sweet Alert
         $sukses = mysqli_affected_rows($koneksi);
@@ -93,7 +54,8 @@ if (!empty($_POST)) {
             $_SESSION['status_proses'] = 'UBAH';
         }
 
-        header('location:../index.php?p=jadwal');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 }
 
@@ -110,7 +72,8 @@ if (!empty($_GET['aksi'])) {
             $_SESSION['status_proses'] = 'HAPUS';
         }
         //echo $sql;
-        header('location:../index.php?p=jadwal');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     } else if ($_GET['aksi'] == 'hapus-individual') {
         $id_jadwal = $_GET['id'];
 
