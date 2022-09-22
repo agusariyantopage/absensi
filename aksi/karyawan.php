@@ -50,7 +50,7 @@ if (!empty($_POST)) {
                     $_SESSION['user_akses']    = 1;
                     $_SESSION['status_proses']         = '';
 
-                    mysqli_query($koneksi, $sql2);
+                    //mysqli_query($koneksi, $sql2);
                     header("location:../index.php");
                 } else {
                     header("location:../login.php?msg=gagal-login");
@@ -73,7 +73,7 @@ if (!empty($_POST)) {
                     $_SESSION['user_akses']    = 3;
                     $_SESSION['status_proses']         = '';
 
-                    mysqli_query($koneksi, $sql2);
+                    // mysqli_query($koneksi, $sql2);
                     header("location:../index.php");
                 } else {
                     header("location:../login.php?msg=gagal-login");
@@ -90,7 +90,7 @@ if (!empty($_POST)) {
 
 if (!empty($_GET['aksi'])) {
     if ($_GET['aksi'] == 'logout') {
-        $sql = "UPDATE karyawan SET terakhir_login=DEFAULT WHERE id_karyawan=$_SESSION[backend_user_id]";
+        $sql = "UPDATE karyawan SET terakhir_login=DEFAULT WHERE id_karyawan=$_SESSION[user_id]";
         mysqli_query($koneksi, $sql);
         session_destroy();
         header('location:../login.php');
